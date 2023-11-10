@@ -34,21 +34,25 @@ const ToDoItemEdit = () => {
                 const response = await axios.get(`${process.env.REACT_APP_API_DOMAIN}/api/ToDoItem/${userId}/GetItem/${itemId}`);
                 const itemObj = response.data;
 
-                setFormData({
-                    ...formData,
+                if (itemObj.dueDate) {
+                    let dueDate = new Date(itemObj.dueDate);
+                    
+                    setFormData({                        
                     name: itemObj.name,
                     description: itemObj.description,
                     isCompleted: itemObj.isCompleted,
-                });
-
-                if (itemObj.dueDate) {
-                    let dueDate = new Date(itemObj.dueDate);
-                    setFormData({
-                        ...formData,
-                        dueDateDay: dueDate.getDay(),
+                        dueDateDay: dueDate.getDate(),
                         dueDateMonth: dueDate.getMonth(),
                         dueDateYear: dueDate.getFullYear(),
                     })
+                }
+                else {
+                    setFormData({
+                        ...formData,
+                        name: itemObj.name,
+                        description: itemObj.description,
+                        isCompleted: itemObj.isCompleted,
+                    });
                 }
 
             }            
@@ -73,10 +77,11 @@ const ToDoItemEdit = () => {
 
     const getDueDate = () => {
         let dueDate;
+
         if (formData.dueDateDay && formData.dueDateMonth && formData.dueDateYear) {
             dueDate = new Date(`${formData.dueDateYear}-${formData.dueDateMonth}-${formData.dueDateDay}`);
 
-            if (!isNaN(dueDate.getTime())) {
+            if (isNaN(dueDate.getDate())) {
                 dueDate = null;
             }
         }
@@ -89,13 +94,14 @@ const ToDoItemEdit = () => {
             let response;
             const itemId = loc.state.id;
             const userId = sessionStorage.getItem('userId');
+            const dueDate = getDueDate();
 
             if (itemId) {
                 const updateObj = {
                     id: itemId,
                     name: formData.name,
                     description: formData.description,
-                    dueDate: getDueDate(),
+                    dueDate: dueDate,
                     userId: userId,
                     isCompleted: formData.isCompleted,
                 };
@@ -106,7 +112,7 @@ const ToDoItemEdit = () => {
                 const updateObj = {
                     name: formData.name,
                     description: formData.description,
-                    dueDate: getDueDate(),
+                    dueDate: dueDate,
                     isCompleted: formData.isCompleted,
                     userId: userId,
                 };

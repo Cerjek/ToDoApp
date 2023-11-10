@@ -44,7 +44,7 @@ const Registration = () => {
 
         const validEmail = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/i.test(formData.email);
         const userValid = /^[A-Za-z0-9]{5,30}$/i.test(formData.username);
-        const passwordValid = /^(?=.*[!@#$])(?=.*[a-zA-Z])(?=.*[0-9])[a-zA-Z0-9!@#$]{8,30}$/i.test(formData.password);
+        const passwordValid = /^(?=.*[!@#$])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9!@#$]{8,30}$/i.test(formData.password);
         const firstValid = /^[a-zA-Z]{1,35}(?:[- ]?[a-zA-Z]+)?$/i.test(formData.firstName) && formData.firstName.length <= 35;
         const lastValid = /^[a-zA-Z]{1,60}(?:[- ]?[a-zA-Z]+)?$/i.test(formData.lastName) && formData.lastName.length <= 60;
 
@@ -104,7 +104,7 @@ const Registration = () => {
                         Password:
                     </label>
                     <div id="password-hint" className="ns-hint">
-                        Please enter a unique password. A password must be between 8 and 30 characters and must contain at least one of the following special characters: '!', '@', '#', '$'
+                        Please enter a unique password. A password must be between 8 and 30 characters, must contain one Capital letter and at least one of the following special characters: '!', '@', '#', '$'
                     </div>
                     <div className="ns-form-group-message-error">
                         <span id="password-error" className="ns-error-message" hidden={formValid.password}>

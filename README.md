@@ -18,7 +18,7 @@ To run this project, it is preferable you be on a Microsoft Windows OS. You will
 
 Before running this project, you will need to run a few commands in powershell.
 
-1. dotnet dev-certs https -ep "$env:USERPROFILE\.aspnet\https\ToDoBackend.Api.pfx" -p <password here> (This password will later be used in the docker-compose.yml file. in the project it is set to todoc3rtp@ssword1
+1. dotnet dev-certs https -ep "$env:USERPROFILE\\\.aspnet\https\ToDoBackend.Api.pfx" -p <password here> (This password will later be used in the docker-compose.yml file. in the project it is set to todoc3rtp@ssword1
 2. dotnet dev-certs https --trust
 
 ## Running the API

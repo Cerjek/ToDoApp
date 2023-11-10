@@ -56,7 +56,7 @@ const TodoList = () => {
                 description: updatedItems.find((item) => item.id === itemId).description,
                 userId: userId,
             });
-
+            
             console.log(response);
         } catch (error) {
             console.error('Error updating todo item', error);
@@ -83,7 +83,7 @@ const TodoList = () => {
     };
 
     const handleCreate = () => {
-        nav(`/edittodoitem/0`);
+        nav(`/edittodoitem`, {state: {}});
     }
 
     const handleEdit = (item) => {
@@ -110,7 +110,7 @@ const TodoList = () => {
                             <button onClick={() => handleEdit(item)}>
                                 <Pencil />
                             </button>
-                            <button onClick={() => handleDelete(item.Id)}>
+                            <button onClick={() => handleDelete(item.id)}>
                                 <Trash />
                             </button>
                         </div>
