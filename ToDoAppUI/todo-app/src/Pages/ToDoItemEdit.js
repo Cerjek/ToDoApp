@@ -38,9 +38,9 @@ const ToDoItemEdit = () => {
                     let dueDate = new Date(itemObj.dueDate);
                     
                     setFormData({                        
-                    name: itemObj.name,
-                    description: itemObj.description,
-                    isCompleted: itemObj.isCompleted,
+                        name: itemObj.name,
+                        description: itemObj.description,
+                        isCompleted: itemObj.isCompleted,
                         dueDateDay: dueDate.getDate(),
                         dueDateMonth: dueDate.getMonth(),
                         dueDateYear: dueDate.getFullYear(),
@@ -176,8 +176,8 @@ const ToDoItemEdit = () => {
                 </div>
                 <br />
                 <div className="ns-checkboxes__item">
-                    <input className="ns-checkboxes__input" id="completed" name="completed" type="checkbox" value={formData.isCompleted} onChange={handleCheckboxChange} />
-                    <label className="ns-label ns-checkboxes__label" htmlFor="completed">
+                    <input className="ns-checkboxes__input" id="isCompleted" name="isCompleted" type="checkbox" checked={formData.isCompleted} value={formData.isCompleted} onChange={handleCheckboxChange} />
+                    <label className="ns-label ns-checkboxes__label" htmlFor="isCompleted">
                         <span className="ns-label-span">Completed</span>
                     </label>
                 </div>

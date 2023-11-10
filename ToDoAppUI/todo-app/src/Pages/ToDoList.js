@@ -14,26 +14,27 @@ const TodoList = () => {
 
     const nav = useNavigate();
 
+    const fetchTodoItems = async ( userId ) => {
+        try {
+            const response = await axios.get(`https://localhost:5001/api/ToDoItem/${userId}/GetItems`);
+            setTodoItems(response.data);
+            setLoading(false);
+        } catch (error) {
+            setResponse(`Error fetching todo items: ${error.response.data}`);
+            setLoading(false);
+        }
+    };
+
     useEffect(() => {
         const userId = sessionStorage.getItem('userId');
-        
-        const fetchTodoItems = async () => {
-            try {
-                const response = await axios.get(`https://localhost:5001/api/ToDoItem/${userId}/GetItems`);
-                setTodoItems(response.data);
-                setLoading(false);
-            } catch (error) {
-                setResponse(`Error fetching todo items: ${error.response.data}`);
-                setLoading(false);
-            }
-        };
 
         if (userId) {
-            fetchTodoItems();
+            fetchTodoItems(userId);
         } else {
             setResponse('User ID not found.');
             setLoading(false);
-        }
+        }  
+        
     }, []); // Empty dependency array ensures the effect runs only once on mount
 
     const handleCheckboxChange = async (itemId) => {
@@ -48,18 +49,17 @@ const TodoList = () => {
             setTodoItems(updatedItems);
 
             // Make the API call to update the item
-            const response = await axios.put('https://localhost:5001/api/ToDoItem', {
+            await axios.put('https://localhost:5001/api/ToDoItem', {
                 id: itemId,
                 name: updatedItems.find((item) => item.id === itemId).name,
                 dueDate: updatedItems.find((item) => item.id === itemId).dueDate,
                 isCompleted: updatedItems.find((item) => item.id === itemId).isCompleted,
                 description: updatedItems.find((item) => item.id === itemId).description,
                 userId: userId,
-            });
-            
-            console.log(response);
+            });    
+
         } catch (error) {
-            console.error('Error updating todo item', error);
+            setResponse(`Error updating todo item: ${error.response.data}`);
         }
     };
 
@@ -103,8 +103,8 @@ const TodoList = () => {
                 ) : (<div className="ns-checkboxes">
                     {todoItems.map((item) => (
                         <div className="ns-checkboxes__item" key={item.id}>
-                            <input className="ns-checkboxes__input" id={item.id} name={item.name} type="checkbox" value={item.isCompleted} onChange={() => handleCheckboxChange(item.id)} />
-                            <label className="ns-label ns-checkboxes__label" htmlFor={item.id}>
+                            <input className="ns-checkboxes__input" id="isCompleted" name="isCompleted" type="checkbox" checked={item.isCompleted} value={item.isCompleted} onChange={() => handleCheckboxChange(item.id)} />
+                            <label className="ns-label ns-checkboxes__label" htmlFor="isCompleted">
                                 <span className="ns-label-span">{item.name}</span>
                             </label>
                             <button onClick={() => handleEdit(item)}>
